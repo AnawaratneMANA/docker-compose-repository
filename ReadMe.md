@@ -102,4 +102,9 @@ volumes:
 
 >source ./initdb.sql
 
+### References
+YouTube: [Setup Apache Guacamole with Docker in 2024](https://www.youtube.com/watch?v=PEUO2cCICS4&t=904s)
+
+Apache Guacamole: [Installing Guacamole with Docker](https://guacamole.apache.org/doc/gug/guacamole-docker.html#installing-guacamole-with-docker)
+
 
