@@ -66,3 +66,40 @@ volumes:
 
 ### Running the docker-compose file
 `docker-compose up -d`
+
+# Guacamole (Docker)
+
+### Prerequisite
+1. LXC container with ubuntu / docker installed
+2. [Portainer](https://docs.portainer.io/start/install-ce/server/docker/linux) installed for docker management
+
+### Installation guide
+1. Run the docker-compose.yml or run it as a stack in portainer.
+2. Bash into the MySQL database for user and table configuration.
+
+3. Log into the SQL terminal `mysql -u root -p`
+4. Execute following commands in order
+
+>CREATE DATABASE guacamole_db;
+
+>CREATE USER 'guacamole_user'@'%' IDENTIFIED BY 'pass';
+
+>GRANT SELECT,INSERT,UPDATE,DELETE ON guacamole_db.* TO 'guacamole_user'@'%';
+
+>FLUSH PRIVILEGES;
+
+>SELECT USER FROM mysql.user;`
+
+5. On the Host machine or the VM (Via Proxmox Shell if using Proxmox) execute the following commands to generate the SQL tables and copy the stricts over to the container.
+
+>docker run --rm guacamole/guacamole /opt/guacamole/bin/initdb.sh --mysql > initdb.sql
+
+>sudo docker cp ./initdb.sql guac-sql:/initdb.sql
+
+6. Again from inside the MySQL database server, Run the following commands.
+
+>USE guacamole_db;
+
+>source ./initdb.sql
+
+
